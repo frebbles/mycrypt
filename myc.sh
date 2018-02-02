@@ -29,7 +29,7 @@ sudo cryptsetup -y -v luksFormat $2
 echo "Opening new file system"
 sudo cryptsetup luksOpen $2 $2
 echo "Zeroing CRYPT file sytem"
-sudo dd if=/dev/zero of=/dev/mapper/$2 status=progress
+sudo dd if=/dev/zero bs=1M count=$3 of=/dev/mapper/$2 status=progress
 echo "Making ext4 system"
 sudo mkfs.ext4 /dev/mapper/$2
 echo "Mounting LUKS file system"
