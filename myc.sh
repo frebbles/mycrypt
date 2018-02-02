@@ -24,8 +24,14 @@ then
 echo "Setup starting..."
 echo "Creating blank file"
 dd if=/dev/zero of=$2 bs=1M count=$3
+
 echo "Creating LUKS file system"
 sudo cryptsetup -y -v luksFormat $2
+if [ "$?" -ne 0 ]; then
+echo "Failed to format filesystem, did you type YES in ALL CAPS?"
+exit
+fi
+
 echo "Opening new file system"
 sudo cryptsetup luksOpen $2 $2
 echo "Zeroing CRYPT file sytem"
